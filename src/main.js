@@ -1,11 +1,22 @@
-import './assets/main.css'
+// main.js
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import App from './App.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Card from './views/Card.vue';
+import Register from './views/Reg.vue';
 
-const app = createApp(App)
+Vue.use(VueRouter);
 
-app.use(createPinia())
+const routes = [
+    { path: '/card', component: Card },
+    { path: '/register', component: Register },
+];
 
-app.mount('#app')
+const router = new VueRouter({
+    mode: 'history',
+    routes,
+});
+
+new Vue({
+    router,
+}).$mount('#app');
