@@ -3,10 +3,6 @@
 </script>
 
 <template>
-  <div id="app">
-    <SideBarLeft />
-    <router-view id="router-view" />
-    <SideBarRight />
-  </div>
+<router-view></router-view>
 </template>
 

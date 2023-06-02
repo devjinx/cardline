@@ -1,19 +1,21 @@
-<!-- Reg.vue -->
-
 <template>
   <div>
-    <h1>Welcome to the Reg page</h1>
-    <!-- Add more content as needed -->
+    <h1>Hello it from reg.vue and register</h1>
+    <!-- Content for the Card component -->
+  </div>
+  <div class="container">
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Reg',
-  // Add any additional component options or logic as needed
+  name: 'Register',
+  // Component options and logic
 }
 </script>
 
 <style scoped>
-/* Add component-specific styles if required */
+
+/* Component-specific styles */
 </style>
