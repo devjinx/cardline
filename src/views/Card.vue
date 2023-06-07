@@ -3,7 +3,7 @@
   <div>
     <div class="card">
       <div class="photo">
-        <img src="path/to/photo.jpg" alt="User Photo">
+ <!--       <img src="path/to/photo.jpg" alt="User Photo">  -->
       </div>
       <div class="name">First Name Last Name</div>
       <div class="username">@username</div>
