@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBgbQByL8hN-JCnfs8x6tUBCoNggMAiRzE",
@@ -13,13 +13,13 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app)
+const auth = getAuth(app);
 
-const form = document.getElementById("registerform")
-const formarea = document.getElementById("form-area")
+const form = document.getElementById("registerform");
+const formarea = document.getElementById("form-area");
 
 form.addEventListener("submit", (e) => {
-    e.preventDefault()
-    const email = form.email.value
-    const password = form.password.value
-})
+    e.preventDefault();
+    const email = form.email.value;
+    const password = form.password.value;
+});
