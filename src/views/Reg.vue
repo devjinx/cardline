@@ -40,36 +40,70 @@
 </template>
 
 <script>
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/storage';
+
 export default {
   data() {
     return {
-      fullName: '',
-      lastName: '',
-      username: '',
-      phoneNumber: '',
-      password: '',
-      confirmPassword: ''
+      // Existing data properties
     };
   },
   methods: {
-    registerUser() {
+    registerUser(event) {
+      event.preventDefault();
+
       if (this.password !== this.confirmPassword) {
         alert('Passwords do not match.');
         return;
       }
 
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.username, this.password)
+      // Get the photo file from the file input
+      const photoFile = this.$refs.photoInput.files[0];
+
+      // Create a reference to Firebase Storage
+      const storageRef = firebase.storage().ref();
+
+      // Generate a unique filename for the photo
+      const photoFilename = `${Date.now()}_${photoFile.name}`;
+
+      // Upload the photo to Firebase Storage
+      const photoUploadTask = storageRef.child(photoFilename).put(photoFile);
+
+      photoUploadTask
+        .then((snapshot) => {
+          // Get the download URL of the uploaded photo
+          return snapshot.ref.getDownloadURL();
+        })
+        .then((photoURL) => {
+          // Register the user with Firebase Authentication
+          return firebase.auth().createUserWithEmailAndPassword(this.username, this.password);
+        })
         .then((userCredential) => {
+          // Get the user ID and create a user record in the database
           const user = userCredential.user;
-          console.log('User created:', user);
+          const userId = user.uid;
+          const userData = {
+            fullName: this.fullName,
+            lastName: this.lastName,
+            username: this.username,
+            phoneNumber: this.phoneNumber,
+            photoURL: photoURL // Set the user's photoURL property to the download URL of the photo
+          };
+
+          // Store the user record in your Firebase Realtime Database or Firestore
+          // Example using Firebase Realtime Database:
+          return firebase.database().ref('users/' + userId).set(userData);
+        })
+        .then(() => {
+          console.log('User registered successfully.');
           // You can redirect the user to another page or perform other actions here
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.error('Error creating user:', errorCode, errorMessage);
+          console.error('Error registering user:', errorCode, errorMessage);
         });
     }
   }

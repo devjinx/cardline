@@ -5,7 +5,7 @@ import router from './router';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
-
+import 'firebase/storage';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBgbQByL8hN-JCnfs8x6tUBCoNggMAiRzE",
