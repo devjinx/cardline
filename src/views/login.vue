@@ -1,32 +1,30 @@
 <template>
-  <center>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form @submit.prevent="login">
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email" required :class="{ 'error': emailError }">
-      <span class="error-message" v-if="emailError">Please enter a valid email.</span>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form @submit.prevent="login">
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email" required :class="{ 'error': emailError }">
+        <span class="error-message" v-if="emailError">Please enter a valid email.</span>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" v-model="password" required :class="{ 'error': passwordError }">
-      <span class="error-message" v-if="passwordError">Please enter a password.</span>
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="password" required :class="{ 'error': passwordError }">
+        <span class="error-message" v-if="passwordError">Please enter a password.</span>
 
-      <button type="submit">Login</button>
-    </form>
-  </div>
-</center>
+        <button type="submit">Login</button>
+      </form>
+    </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useStore } from 'pinia';
+import { defineComponent, ref } from 'vue';
+import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import { auth } from '../firebaseConfig';
 
-export default {
+export default defineComponent({
   name: 'LoginComponent',
   setup() {
-    const store = useStore();
+    const store = defineStore();
     const router = useRouter();
 
     const email = ref('');
@@ -55,7 +53,7 @@ export default {
         await auth.signInWithEmailAndPassword(email.value, password.value);
 
         // Perform any necessary actions after successful sign-in (e.g., store user data, redirect)
-        // Here, we assume the user data is stored in Vuex store
+        // Here, we assume the user data is stored in the Vuex store
         await store.dispatch('fetchUser');
 
         // Redirect to the dashboard
@@ -80,7 +78,7 @@ export default {
       login
     };
   }
-};
+});
 </script>
 
 <style>

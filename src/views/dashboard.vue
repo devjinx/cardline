@@ -14,15 +14,16 @@
 </template>
 
 <script>
+//problem
 import { computed } from 'vue';
-import { useStore } from 'pinia';
+import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import { auth, db } from '../firebaseConfig';
 
 export default {
   name: 'DashboardComponent',
   setup() {
-    const store = useStore();
+    const store = defineStore();
     const router = useRouter();
 
     // Retrieve user data from store
