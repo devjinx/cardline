@@ -14,20 +14,21 @@
 </template>
 
 <script>
-//problem
-import { computed } from 'vue';
-import { defineStore } from 'pinia';
+import { defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { auth, db } from '../firebaseConfig';
+import { auth } from '../firebaseConfig';
+import { useStore } from '../store/store';
 
-export default {
+export default defineComponent({
   name: 'DashboardComponent',
   setup() {
-    const store = defineStore();
     const router = useRouter();
 
-    // Retrieve user data from store
-    const user = computed(() => store.state.user);
+    // Retrieve store instance using useStore
+    const store = useStore();
+
+    // Retrieve user data from the store
+    const user = computed(() => store.user);
 
     const signOut = async () => {
       try {
@@ -41,10 +42,11 @@ export default {
 
     return {
       user,
-      signOut
+      signOut,
     };
-  }
-};
+  },
+});
+
 </script>
 
 <style>

@@ -1,30 +1,43 @@
 <template>
-    <div class="login-container">
-      <h2>Login</h2>
-      <form @submit.prevent="login">
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required :class="{ 'error': emailError }">
-        <span class="error-message" v-if="emailError">Please enter a valid email.</span>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form @submit.prevent="login">
+      <label for="email">Email:</label>
+      <input type="email" id="email" v-model="email" required :class="{ 'error': emailError }">
+      <span class="error-message" v-if="emailError">Please enter a valid email.</span>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required :class="{ 'error': passwordError }">
-        <span class="error-message" v-if="passwordError">Please enter a password.</span>
+      <label for="password">Password:</label>
+      <input type="password" id="password" v-model="password" required :class="{ 'error': passwordError }">
+      <span class="error-message" v-if="passwordError">Please enter a password.</span>
 
-        <button type="submit">Login</button>
-      </form>
-    </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
+
+// Define your Pinia store module
+const store = defineStore({
+  id: 'myStore',
+  actions: {
+    async fetchUser() {
+      // Perform any necessary user data fetching logic here
+      // For example, fetch user data from an API or set user data from the authentication response
+      // Replace the following line with your actual implementation
+      console.log('Fetching user data');
+    },
+  },
+});
 
 export default defineComponent({
   name: 'LoginComponent',
   setup() {
-    const store = defineStore();
     const router = useRouter();
 
     const email = ref('');
@@ -50,11 +63,12 @@ export default defineComponent({
         }
 
         // Sign in with email and password
-        await auth.signInWithEmailAndPassword(email.value, password.value);
+        const authInstance = getAuth();
+        await signInWithEmailAndPassword(authInstance, email.value, password.value);
 
         // Perform any necessary actions after successful sign-in (e.g., store user data, redirect)
         // Here, we assume the user data is stored in the Vuex store
-        await store.dispatch('fetchUser');
+        await store.fetchUser();
 
         // Redirect to the dashboard
         router.push('/dashboard');
@@ -65,7 +79,6 @@ export default defineComponent({
     };
 
     const isValidEmail = (email) => {
-      // Basic email validation, you can customize this as per your requirements
       const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       return emailRegex.test(email);
     };
@@ -79,6 +92,7 @@ export default defineComponent({
     };
   }
 });
+
 </script>
 
 <style>
