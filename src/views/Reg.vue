@@ -1,82 +1,92 @@
 <template>
-  <center>
-    <div class="container">
-      <form enctype="multipart/form-data" @submit="registerUser">
-        <div class="form-group">
-          <label for="fullname">Full Name:</label>
-          <input type="text" v-model="fullName" id="fullname" name="fullname" required>
-        </div>
-        <div class="form-group">
-          <label for="lastname">Last Name:</label>
-          <input type="text" v-model="lastName" id="lastname" name="lastname" required>
-        </div>
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" v-model="username" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-          <label for="numberphone">Phone Number:</label>
-          <input type="tel" v-model="phoneNumber" id="numberphone" name="numberphone" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" v-model="password" id="password" name="password" required>
-        </div>
-        <div class="form-group">
-          <label for="confirmpassword">Confirm Password:</label>
-          <input type="password" v-model="confirmPassword" id="confirmpassword" name="confirmpassword" required>
-        </div>
-        <div class="form-group">
-          <label for="photo">Photo (JPEG or PNG, up to 2MB):</label>
-          <input type="file" id="photo" name="photo" accept=".jpg, .jpeg, .png" required>
-        </div>
-        <div class="form-group">
-          <input type="submit" value="Submit">
-        </div>
-      </form>
-      <router-view></router-view>
-    </div>
-  </center>
+  <div class="login-container">
+    <h2>Registration</h2>
+    <form @submit.prevent="register">
+      <label for="email">Email:</label>
+      <input type="email" id="email" v-model="email" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" v-model="password" required>
+      <button type="submit">Register</button>
+    </form>
+  </div>
 </template>
 
-<script>
-//script for connect
-</script>
-
-
-<style scoped>
-/* Component-specific styles */
-body {
+<style>
+.login-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100vh;
+  text-align: center;
 }
-.container {
-  width: 400px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+
+.login-container h2 {
+  margin-bottom: 20px;
 }
-.form-group {
-  margin-bottom: 10px;
+
+.login-container form {
+  width: 300px;
 }
-.form-group label {
+
+.login-container label,
+.login-container input,
+.login-container button {
   display: block;
-  font-weight: bold;
-}
-.form-group input {
   width: 100%;
-  padding: 5px;
+  margin-bottom: 15px;
+}
+
+.login-container .error {
+  border: 1px solid red;
+}
+
+.login-container .error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.login-container button {
+  padding: 10px;
   border-radius: 3px;
-  border: 1px solid #ccc;
-}
-.form-group input[type="file"] {
-  padding: 0;
-}
-.form-group input[type="submit"] {
-  background-color: #4CAF50;
-  color: white;
+  border: none;
+  background-color: #4caf50;
+  color: #fff;
   cursor: pointer;
 }
+
+.login-container button:hover {
+  background-color: #45a049;
+}
 </style>
+
+<script>
+import { initializeApp } from '@firebase/app';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: ''
+    };
+  },
+  methods: {
+    register() {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, this.email, this.password)
+        .then(() => {
+          // Registration successful
+          alert('Registration successful!');
+          // You can redirect to another page or perform additional actions here
+        })
+        .catch((error) => {
+          // Registration failed
+          console.error(error);
+          alert('Registration failed. Please try again.');
+        });
+    }
+  }
+};
+</script>

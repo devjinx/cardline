@@ -27,10 +27,18 @@ const store = defineStore({
   id: 'myStore',
   actions: {
     async fetchUser() {
-      // Perform any necessary user data fetching logic here
-      // For example, fetch user data from an API or set user data from the authentication response
-      // Replace the following line with your actual implementation
-      console.log('Fetching user data');
+      try {
+        // Perform necessary user data fetching logic here
+        // For example, fetch user data from an API
+        const response = await fetch('/api/user');
+        const userData = await response.json();
+
+        // Update user data in the store or take any other required actions
+        this.user = userData;
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        // Handle error if needed
+      }
     },
   },
 });
@@ -92,6 +100,7 @@ export default defineComponent({
     };
   }
 });
+
 
 </script>
 
