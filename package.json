@@ -23,7 +23,7 @@
         "tiny-emitter": "^2.1.0",
         "vue": "^3.3.4",
         "vue-axios": "^3.5.2",
-        "vue-router": "^4.2.2",
+        "vue-router": "^4.2.4",
         "vue-server-renderer": "^2.7.14",
         "vue-template-compiler": "^2.7.14",
         "vuefire": "^3.1.0",
