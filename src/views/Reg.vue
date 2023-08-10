@@ -93,6 +93,4 @@ const register = () => {
     border-radius: 3px;
     cursor: pointer;
   }
-</style>
-
-
+</style>  

@@ -5,6 +5,9 @@
       <span> 
         <router-link to="/dashboard"> dashboard </router-link> |
       </span>
+      <span> 
+        <router-link to="/card"> card </router-link> |
+      </span>
       <span v-if="isLoggedIn"> 
         <button @click="handleSignOut"> Logout </button> 
       </span>
