@@ -12,7 +12,7 @@
       </div>
       <p v-if="errMsg" class="error-message">{{ errMsg }}</p>
       <div class="form-group">
-        <button class="submit-btn" @click="signIn">Submit</button>
+        <button class="submit-btn" @click="signIn">login</button>
       </div>
     </div>
   </center>

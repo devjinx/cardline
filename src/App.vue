@@ -1,12 +1,15 @@
 <template>
   <div>
     <nav>
-      <router-link to="/"> Home </router-link> |
+      <router-link to="/">Home </router-link> |
       <span> 
-        <router-link to="/dashboard"> dashboard </router-link> |
+        <router-link to="/dashboard">Dashboard </router-link> |
       </span>
       <span> 
-        <router-link to="/card"> card </router-link> |
+        <router-link to="/card">Card </router-link> |
+      </span>
+      <span> 
+        <router-link to="/registeruser">Register User </router-link> |
       </span>
       <span v-if="isLoggedIn"> 
         <button @click="handleSignOut"> Logout </button> 
@@ -24,6 +27,8 @@
 <script setup>
 import { ref, watchEffect } from 'vue' // used for conditional rendering
 import { getAuth,onAuthStateChanged, signOut } from 'firebase/auth'
+import 'firebase/storage';
+import 'firebase/firestore';
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

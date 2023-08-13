@@ -1,8 +1,10 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import { initializeApp } from 'firebase/app'
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import { initializeApp } from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 /* code from our Firebase console */
 const firebaseConfig = {
@@ -19,8 +21,6 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig)
 
-const app = createApp(App)
-
-app.use(router)
-
-app.mount('#app')
+const app = createApp(App);
+app.use(router);
+app.mount('#app');
