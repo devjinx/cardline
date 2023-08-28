@@ -6,21 +6,21 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-/* code from our Firebase console */
+// Firebase configuration from your Firebase console
 const firebaseConfig = {
-    apiKey: "AIzaSyCl_1rB3G5UJyZPCw9V4Zmv8Ob8q1EPUZM",
-    authDomain: "testappcard-27b80.firebaseapp.com",
-    databaseURL: "https://testappcard-27b80-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "testappcard-27b80",
-    storageBucket: "testappcard-27b80.appspot.com",
-    messagingSenderId: "516526069040",
-    appId: "1:516526069040:web:b7faade2ebf1459efca4f5",
-    measurementId: "G-3Y18BQ2HRS"
+    apiKey: "AIzaSyBgbQByL8hN-JCnfs8x6tUBCoNggMAiRzE",
+    authDomain: "cardline-e0861.firebaseapp.com",
+    databaseURL: "https://cardline-e0861-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "cardline-e0861",
+    storageBucket: "cardline-e0861.appspot.com",
+    messagingSenderId: "35841504833",
+    appId: "1:35841504833:web:222d2ed94fda0c7948b8c0",
+    measurementId: "G-TGVZ5RSH84"
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig);
 
-const app = createApp(App);
-app.use(router);
-app.mount('#app');
+const vueApp = createApp(App);
+vueApp.use(router);
+vueApp.mount('#app');

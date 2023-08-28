@@ -1,75 +1,80 @@
 <template>
-    <div>
-      <input v-model="name" placeholder="Name" />
-      <input v-model="email" placeholder="Email" />
-      <input v-model="phoneNumber" placeholder="Phone Number" />
-      <input v-model="position" placeholder="Position" />
-      <input type="file" @change="handleFileChange" />
-      <button @click="registerProfile">Register</button>
-    </div>
-  </template>
-  
-  <script>
+  <div>
+    <h2>Data Input Form</h2>
+    <form @submit.prevent="submitForm">
+      <label>Username:</label>
+      <input v-model="userData.username" required />
+
+      <label>Name:</label>
+      <input v-model="userData.name" required />
+
+      <label>Phone Number:</label>
+      <input v-model="userData.phoneNumber" required />
+
+      <label>Position:</label>
+      <input v-model="userData.position" required />
+
+      <label>Occupation:</label>
+      <input v-model="userData.occupation" required />
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</template>
+
+<script>
 import { ref } from 'vue';
 import { initializeApp } from 'firebase/app';
-import 'firebase/storage'; // Import 'firebase/storage' instead of 'firebase/firestore'
-import { getStorage } from 'firebase/storage'; // Import 'getStorage' from 'firebase/storage'
-import { getFirestore } from 'firebase/firestore'; // Import getFirestore function
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
-// Initialize Firebase (make sure to initialize it only once in your entire app)
+
+// Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyCl_1rB3G5UJyZPCw9V4Zmv8Ob8q1EPUZM",
-    authDomain: "testappcard-27b80.firebaseapp.com",
-    databaseURL: "https://testappcard-27b80-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "testappcard-27b80",
-    storageBucket: "testappcard-27b80.appspot.com",
-    messagingSenderId: "516526069040",
-    appId: "1:516526069040:web:b7faade2ebf1459efca4f5",
-    measurementId: "G-3Y18BQ2HRS"
+  apiKey: "AIzaSyBgbQByL8hN-JCnfs8x6tUBCoNggMAiRzE",
+  authDomain: "cardline-e0861.firebaseapp.com",
+  databaseURL: "https://cardline-e0861-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "cardline-e0861",
+  storageBucket: "cardline-e0861.appspot.com",
+  messagingSenderId: "35841504833",
+  appId: "1:35841504833:web:222d2ed94fda0c7948b8c0",
+  measurementId: "G-TGVZ5RSH84"
 };
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app); // Initialize Firestore
+
 export default {
   data() {
     return {
-      name: '',
-      email: '',
-      phoneNumber: '',
-      position: '',
-      photo: null,
-    }
+      userData: {
+        username: '',
+        name: '',
+        phoneNumber: '',
+        position: '',
+        occupation: '',
+      },
+    };
   },
   methods: {
-    handleFileChange(event) {
-      this.photo = event.target.files[0];
-    },
-    async registerProfile() {
-      if (this.photo && this.photo.type === 'image/png' && this.photo.size <= 1024 * 1024) {
-        const db = getFirestore();
-        const storage = getStorage();
-
-        const photoRef = storage.child(`profile_photos/${this.photo.name}`);
-        await photoRef.put(this.photo);
-        const photoUrl = await photoRef.getDownloadURL();
-
-        await db.collection('profiles').add({
-          name: this.name,
-          email: this.email,
-          phoneNumber: this.phoneNumber,
-          position: this.position,
-          photoUrl: photoUrl,
-        });
-
-        this.name = '';
-        this.email = '';
-        this.phoneNumber = '';
-        this.position = '';
-        this.photo = null;
-
-        alert('Profile registered successfully!');
-      } else {
-        alert('Please select a PNG image file of size up to 1MB.');
+    async submitForm() {
+      try {
+        const app = initializeApp(firebaseConfig); // Initialize Firebase
+        const db = getFirestore(app);
+        const userRef = collection(db, 'users');
+        await addDoc(userRef, this.userData);
+        console.log('Data added to Firestore');
+        // Clear form after submission
+        this.userData = {
+          username: '',
+          name: '',
+          phoneNumber: '',
+          position: '',
+          occupation: '',
+        };
+      } catch (error) {
+        console.error('Error adding data:', error);
       }
     },
   },
 };
+
 </script>
