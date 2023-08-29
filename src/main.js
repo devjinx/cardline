@@ -6,7 +6,8 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-// Firebase configuration from your Firebase console
+// Firebase configuration
+
 const firebaseConfig = {
     apiKey: "AIzaSyBgbQByL8hN-JCnfs8x6tUBCoNggMAiRzE",
     authDomain: "cardline-e0861.firebaseapp.com",
