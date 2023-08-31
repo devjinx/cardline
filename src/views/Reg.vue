@@ -1,5 +1,4 @@
 <template>
-  <center>
   <div class="container">
     <h1>Create an Account</h1>
     <div class="form-group">
@@ -14,7 +13,6 @@
       <button class="submit-btn" @click="register">register</button>
     </div>
   </div>
-</center>
 </template>
 
 <script setup>
@@ -30,7 +28,7 @@ const register = () => {
   createUserWithEmailAndPassword(getAuth(),email.value, password.value) // need .value because ref()
   .then((data) => {
     console.log('Successfully registered!');
-    router.push('/dashboard') // redirect to the feed
+    router.push('/registeruser') // redirect to the feed
   })
   .catch(error => {
     console.log(error.code)

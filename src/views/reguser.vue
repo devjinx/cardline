@@ -70,6 +70,7 @@ export default {
           position: '',
           occupation: '',
         };
+        router.push('/dashboard'); // Replace '/dashboard' with the actual dashboard route
       } catch (error) {
         console.error('Error adding data:', error);
       }
